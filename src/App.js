@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from 'react';
+import { About, Footer, Header, Skills, Testimonial, Work } from './container';
+import { Navbar } from './components';
+import { Helmet } from 'react-helmet';
+import Styles from './data/Style';
+import { ThemeContext, ThemeProvider } from "./providers/ThemeProvider";
+import './App.scss';
 
-function App() {
+const StyleTag = () => {
+  const [themeMode] = useContext(ThemeContext);
+  console.log(themeMode.theme);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Helmet>
+      <style>{Styles(themeMode.theme)}</style>
+    </Helmet>
   );
+};
+
+const App = () => { 
+
+  return (
+<ThemeProvider >
+  <div className="app"> 
+    <StyleTag />
+    <Navbar />    
+    <Header />
+    <About />
+    <Work />
+    <Skills />
+    <Testimonial />
+    <Footer />
+  </div>
+</ThemeProvider>
+  )
 }
 
 export default App;
